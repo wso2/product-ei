@@ -45,7 +45,7 @@ public class SoapToJsonUsingMessageTypeTest extends ScenarioTestBase {
         proxyServiceUrl = getProxyServiceURLHttp(proxyServiceName);
     }
 
-    @Test(description = "1.1.2.1", enabled = false)
+    @Test(description = "1.1.2.1")
     public void convertValidSoapToJsonUsingMessageType() throws Exception {
 
         String request = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +

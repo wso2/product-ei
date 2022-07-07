@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/json" name="JsonMapping" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/message/1_1_1_1_1">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{ &quot;LookupCity&quot;: \{&quot;Zip&quot;: 60601}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{"LookupCityResult": {"City": "Chicago","State": "IL","Zip": "60601"}}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_1_2_1_1">
+        <inSequence>
+            <switch source="json-eval($)">
+                <case regex="\{&quot;getQuote&quot;:\{&quot;request&quot;:\{&quot;symbol&quot;:&quot;WSO2&quot;}}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{
+    "getQuoteResponse": {
+        "return": {
+            "change": "3.961306710115824",
+            "earnings": "-9.474775008224704",
+            "high": "157.6906144430487",
+            "last": "152.24464430136305",
+            "lastTradeTimestamp": "Fri Nov 30 14:05:46 IST 2018",
+            "low": "158.97317787701516",
+            "marketCap": "5.498486260437736E7",
+            "name": "WSO2 Company",
+            "open": "-150.4303028558359",
+            "peRatio": "25.43149084018825",
+            "percentageChange": "-2.746033637119583",
+            "prevClose": "-144.2555785394889",
+            "symbol": "WSO2",
+            "volume": "15328"
+        }
+    }
+}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_1_3_1_1">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{&quot;item&quot;:\[\{&quot;name&quot;:&quot;Berry-Berry Belgian Waffles&quot;,&quot;price&quot;:&quot;\$8.95&quot;,&quot;calories&quot;:900,&quot;orgin&quot;:&quot;Belgian&quot;,&quot;veg&quot;:true,&quot;description&quot;:&quot;Light Belgian waffles covered with an assortment of fresh berries and whipped cream&quot;}]}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{
+    "item": [
+        {
+            "name": "Berry-Berry Belgian Waffles",
+            "price": "$8.95",
+            "calories": 900,
+            "orgin": "Belgian",
+            "veg": true,
+            "description": "Light Belgian waffles covered with an assortment of fresh berries and whipped cream"
+        }
+    ]
+}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_2_1_1_1">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{ &quot;LookupCity&quot;: \{&quot;Zip&quot;: 60601}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{"LookupCityResult": {"City": "Chicago","State": "IL","Zip": "60601"}}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_2_2_1_1">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{&quot;getQuote&quot;:\{&quot;request&quot;:\{&quot;symbol&quot;:&quot;IBM&quot;}}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{
+    "getQuoteResponse": {
+        "return": {
+            "change": "3.961306710115824",
+            "earnings": "-9.474775008224704",
+            "high": "157.6906144430487",
+            "last": "152.24464430136305",
+            "lastTradeTimestamp": "Fri Nov 30 14:05:46 IST 2018",
+            "low": "158.97317787701516",
+            "marketCap": "5.498486260437736E7",
+            "name": "IBM",
+            "open": "-150.4303028558359",
+            "peRatio": "25.43149084018825",
+            "percentageChange": "-2.746033637119583",
+            "prevClose": "-144.2555785394889",
+            "symbol": "IBM",
+            "volume": "15328"
+        }
+    }
+}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_2_2_1_2">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{&quot;LookupCityRequest&quot;:\{&quot;LookupCity&quot;:\{&quot;Zip&quot;:\[35801,85001,99501]}}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{
+    "LookupCityResults": [{
+            "Zip": "35801",
+            "City": "Huntsville",
+            "State": "Alabama"
+        },
+        {
+            "Zip": "85001",
+            "City": "Phoenix",
+            "State": "Arizona"
+        },
+        {
+            "Zip": "99501",
+            "City": "Anchorage",
+            "State": "Alaska"
+        }
+    ]
+}
+}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_2_2_1_3">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{&quot;getQuote&quot;:\{&quot;request&quot;:\{&quot;symbol&quot;:null}}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{
+    "getQuote": {
+        "request": {
+            "symbol": null
+        }
+    }
+}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" uri-template="/message/1_2_2_1_4">
+        <inSequence>
+            <log level="full">
+                <property expression="json-eval($)" name="json"/>
+            </log>
+            <switch source="json-eval($)">
+                <case regex="\{&quot;getQuote&quot;:\{&quot;request&quot;:\{&quot;symbol&quot;:\[&quot;IBM&quot;]}}}">
+                    <payloadFactory description="Build Response Payload in JSON format" media-type="json">
+                        <format>{
+    "getQuote": {
+        "request": {
+            "symbol": [
+                "IBM"
+            ]
+        }
+    }
+}</format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default>
+                    <sequence key="contentMismatchJsonPayload"/>
+                </default>
+            </switch>
+            <log level="full"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

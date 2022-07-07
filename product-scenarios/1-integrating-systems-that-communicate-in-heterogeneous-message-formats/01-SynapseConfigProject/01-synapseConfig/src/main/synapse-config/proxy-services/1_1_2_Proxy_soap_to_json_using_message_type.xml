@@ -6,9 +6,7 @@
             <log level="custom">
                 <property expression="json-eval($)" name="JSON_VALUE"/>
             </log>
-            <send>
-                <endpoint key="JSON_EP"/>
-            </send>
+            <sequence key="callJsonMappingApi"/>
         </inSequence>
         <outSequence>
             <!-- This log full is added in order to make content aware -->

@@ -23,7 +23,15 @@
             <header name="Action" scope="default" value="urn:getQuote"/>
             <send>
                 <endpoint>
-                    <address uri="http://ei-backend.scenarios.wso2.org:8080/axis2/services/SimpleStockQuoteService"/>
+                    <address uri="http://localhost:8280/services/2_SoapMappingProxy">
+                        <suspendOnFailure>
+                            <initialDuration>-1</initialDuration>
+                            <progressionFactor>1</progressionFactor>
+                        </suspendOnFailure>
+                        <markForSuspension>
+                            <retriesBeforeSuspension>0</retriesBeforeSuspension>
+                        </markForSuspension>
+                    </address>
                 </endpoint>
             </send>
         </inSequence>

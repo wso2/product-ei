@@ -41,4 +41,7 @@
     <artifact name="4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/4_1_1_1_14_Proxy_PublishWSDLModifyUserWSDLPortAddress.xml</file>
     </artifact>
+    <artifact name="4_SoapMappingProxy" groupId="org.wso2.ei.product-scenarios.scenario_04.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/4_SoapMappingProxy.xml</file>
+    </artifact>
 </artifacts>

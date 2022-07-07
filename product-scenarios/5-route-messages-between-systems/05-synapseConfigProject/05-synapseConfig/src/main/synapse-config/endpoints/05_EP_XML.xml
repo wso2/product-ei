@@ -18,7 +18,7 @@
   -->
 
 <endpoint name="05_EP_XML" xmlns="http://ws.apache.org/ns/synapse">
-    <address uri="http://ei-backend.scenarios.wso2.org:9090/eiTests/XMLEndpoint">
+    <address uri="http://localhost:8280/xml/message/">
         <timeout>
             <responseAction>fault</responseAction>
         </timeout>
@@ -30,6 +30,7 @@
         </suspendOnFailure>
         <markForSuspension>
             <errorCodes>-1</errorCodes>
+            <retriesBeforeSuspension>0</retriesBeforeSuspension>
         </markForSuspension>
     </address>
 </endpoint>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/soap" name="1_SoapMapping" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/message">
+        <inSequence>
+            <property expression="//m:getQuote/m:request/m:symbol" name="symbol" scope="default" type="STRING" xmlns:m="http://services.samples"/>
+            <switch source="//m:getQuote/m:request/m:symbol" xmlns:m="http://services.samples">
+                <case regex="WSO2">
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+                                <soapenv:Body>
+                                    <ns:getQuoteResponse xmlns:ns="http://services.samples">
+                                        <ns:return xmlns:ax21="http://services.samples/xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ax21:GetQuoteResponse">
+                                            <ax21:change>-2.401512460555732</ax21:change>
+                                            <ax21:earnings>13.368496729984376</ax21:earnings>
+                                            <ax21:high>180.5041439419784</ax21:high>
+                                            <ax21:last>172.7292417859066</ax21:last>
+                                            <ax21:lastTradeTimestamp>Wed Oct 20 16:47:55 UTC 2021</ax21:lastTradeTimestamp>
+                                            <ax21:low>178.13322688235257</ax21:low>
+                                            <ax21:marketCap>4.642100067387913E7</ax21:marketCap>
+                                            <ax21:name>WSO2 Company</ax21:name>
+                                            <ax21:open>-172.30673582308086</ax21:open>
+                                            <ax21:peRatio>25.711790792138263</ax21:peRatio>
+                                            <ax21:percentageChange>1.4955486592908631</ax21:percentageChange>
+                                            <ax21:prevClose>-160.57735371140953</ax21:prevClose>
+                                            <ax21:symbol>WSO2</ax21:symbol>
+                                            <ax21:volume>5421</ax21:volume>
+                                        </ns:return>
+                                    </ns:getQuoteResponse>
+                                </soapenv:Body>
+                            </soapenv:Envelope>
+                        </format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default/>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

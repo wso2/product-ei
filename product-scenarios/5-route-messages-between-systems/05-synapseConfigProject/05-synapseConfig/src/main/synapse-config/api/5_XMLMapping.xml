@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/xml" name="5_XMLMapping" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/message">
+        <inSequence>
+            <switch source="//m:GetPrice/m:Item" xmlns:m="https://www.w3schools.com/prices">
+                <case regex="Apple">
+                    <payloadFactory media-type="xml">
+                        <format>
+                            <m:GetPriceResponse>
+                                <m:Price>1.90</m:Price>
+                            </m:GetPriceResponse>
+                        </format>
+                        <args/>
+                    </payloadFactory>
+                </case>
+                <default/>
+            </switch>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

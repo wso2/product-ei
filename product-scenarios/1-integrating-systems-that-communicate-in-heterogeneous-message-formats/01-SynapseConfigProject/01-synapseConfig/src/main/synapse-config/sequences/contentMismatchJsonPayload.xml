@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="contentMismatchJsonPayload" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <payloadFactory description="Build Default Response Payload in JSON format" media-type="json">
+        <format>{
+    "status": "content mismatch in json"
+}</format>
+        <args/>
+    </payloadFactory>
+    <property name="HTTP_SC" scope="axis2" type="STRING" value="500"/>
+</sequence>

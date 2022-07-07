@@ -41,7 +41,7 @@ public class PoxToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
         apiInvocationUrl = getApiInvocationURLHttp(apiName);
     }
 
-    @Test(description = "1.2.1.1", enabled = false)
+    @Test(description = "1.2.1.1")
     public void convertValidPoxToJsonUsingPayloadFactory() throws Exception {
         String request ="<LookupCityRequest xmlns=\"http://tempuri.org\">\n" +
                         "\t<LookupCity>\n" +
@@ -64,7 +64,7 @@ public class PoxToJsonUsingPayloadFactoryTest extends ScenarioTestBase {
                                            "Valid Pox To Json transformation Using Payload Factory");
     }
 
-    @Test(description = "1.2.1.2", enabled = true)
+    @Test(description = "1.2.1.2")
     public void convertMalformedPoxToJsonUsingPayloadFactory() throws Exception {
 
         String request = "<m0:getQuote xmlns:m0=\"http://services.samples/xsd\">\n" +

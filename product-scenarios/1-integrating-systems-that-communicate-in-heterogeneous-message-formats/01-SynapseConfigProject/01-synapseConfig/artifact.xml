@@ -143,4 +143,25 @@
     <artifact name="1_6_13_API_performStringOperations" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/api/1_6_13_API_performStringOperations.xml</file>
     </artifact>
+    <artifact name="1_JsonMapping" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_JsonMapping.xml</file>
+    </artifact>
+    <artifact name="callJsonMappingApi" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callJsonMappingApi.xml</file>
+    </artifact>
+    <artifact name="contentMismatchJsonPayload" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/contentMismatchJsonPayload.xml</file>
+    </artifact>
+    <artifact name="1_TextMapping" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_TextMapping.xml</file>
+    </artifact>
+    <artifact name="CallTextMappingApi" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/CallTextMappingApi.xml</file>
+    </artifact>
+    <artifact name="callSoapMappingApi" groupId="org.wso2.ei.product-scenarios.scenario_01.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/callSoapMappingApi.xml</file>
+    </artifact>
+    <artifact name="1_SoapMapping" groupId="org.wso2.ei.product-scenarios.scenario_01.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/1_SoapMapping.xml</file>
+    </artifact>
 </artifacts>

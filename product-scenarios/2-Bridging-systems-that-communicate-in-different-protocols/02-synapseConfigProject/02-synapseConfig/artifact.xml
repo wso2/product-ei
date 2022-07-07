@@ -32,4 +32,7 @@
     <artifact name="2_1_1_7_Proxy_addressEndpointViaSendMediator" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/proxy-services/2_1_1_7_Proxy_addressEndpointViaSendMediator.xml</file>
     </artifact>
+    <artifact name="2_SoapMappingProxy" groupId="org.wso2.ei.product-scenarios.scenario_02.proxy-service" version="1.0.0" type="synapse/proxy-service" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/proxy-services/2_SoapMappingProxy.xml</file>
+    </artifact>
 </artifacts>

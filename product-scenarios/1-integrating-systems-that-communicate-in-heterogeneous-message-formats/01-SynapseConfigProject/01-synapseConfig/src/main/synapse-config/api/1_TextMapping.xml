@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/text" name="TextMapping" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/message">
+        <inSequence>
+            <property expression="json-eval($.text)" name="text" scope="default" type="STRING"/>
+            <payloadFactory description="Build Response Payload in Text format" media-type="text">
+                <format>incoming message is: $1</format>
+                <args>
+                    <arg evaluator="xml" expression="get-property('text')"/>
+                </args>
+            </payloadFactory>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

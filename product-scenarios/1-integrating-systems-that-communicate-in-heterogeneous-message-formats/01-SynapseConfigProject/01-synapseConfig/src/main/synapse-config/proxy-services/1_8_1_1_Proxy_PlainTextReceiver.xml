@@ -8,7 +8,7 @@ print("printing symbol " + symbol);
 symbol = symbol + " to work in";
 mc.setPayloadXML(<text xmlns="http://ws.apache.org/commons/ns/payload">{symbol}</text>);]]></script>
             <sequence key="fullLogSeq"/>
-            <sequence description="" key="callTextEndpointSeq"/>
+            <sequence description="" key="CallTextMappingApi"/>
             <sequence key="fullLogSeq"/>
             <respond/>
         </inSequence>
