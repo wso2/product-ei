@@ -130,6 +130,13 @@
         <groupId>org.wso2.maven</groupId>
         <artifactId>wso2-general-project-plugin</artifactId>
         <version>2.1.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.sun.activation</groupId>
+            <artifactId>javax.activation</artifactId>
+            <version>1.2.0</version>
+          </dependency>
+        </dependencies>
         <extensions>true</extensions>
         <executions>
           <execution>
