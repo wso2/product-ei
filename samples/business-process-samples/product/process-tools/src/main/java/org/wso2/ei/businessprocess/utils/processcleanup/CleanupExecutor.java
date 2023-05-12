@@ -520,12 +520,18 @@ public class CleanupExecutor {
 			log.error(errMsg, e);
 		}
 		//List all the packages related to tenant
-		DeployedPackagesPaginated depl = bpelClient.listDeployedPackagesPaginated(0,"");
-		for(PackageType packageInfo : depl.get_package()) {
-			for (Version_type0 packageWithVersion : packageInfo.getVersions().getVersion()) {
-				tenantPackageList.add(packageWithVersion.getName());
+		int pageNumber = 0;
+		DeployedPackagesPaginated depl = bpelClient.listDeployedPackagesPaginated(pageNumber,"");
+		while (depl != null && depl.get_package() != null && depl.get_package().length > 0) {
+			for(PackageType packageInfo : depl.get_package()) {
+				for (Version_type0 packageWithVersion : packageInfo.getVersions().getVersion()) {
+					tenantPackageList.add(packageWithVersion.getName());
+				}
 			}
+			pageNumber++;
+			depl = bpelClient.listDeployedPackagesPaginated(pageNumber,"");
 		}
+
 		return tenantPackageList;
 	}
 }
