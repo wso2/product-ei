@@ -82,17 +82,17 @@ ant -buildfile "$CARBON_HOME"/bin/build.xml
 
 # update classpath
 CARBON_CLASSPATH=""
-for f in "$CARBON_HOME"/wso2/lib/*.jar
+for f in "$CARBON_HOME"/lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$f
 done
 
-for g in "$CARBON_HOME"/repository/lib/*.jar
+for g in "$CARBON_HOME"/wso2/components/plugins/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$g
 done
 
-for h in "$CARBON_HOME"/wso2/lib/api/*.jar
+for h in "$CARBON_HOME"/wso2/lib/*.jar
 do
   CARBON_CLASSPATH=$CARBON_CLASSPATH:$h
 done
@@ -112,5 +112,4 @@ cd "$CARBON_HOME"
 
 CARBON_CLASSPATH="$CARBON_HOME/lib/patches":"$CARBON_HOME/conf":$CARBON_CLASSPATH
 
-$JAVA_HOME/bin/java -cp "$CARBON_CLASSPATH" org.wso2.carbon.core.util.PasswordUpdater $*
-
+$JAVA_HOME/bin/java -Dcarbon.config.dir.path="$CARBON_HOME/conf" -cp "$CARBON_CLASSPATH" org.wso2.carbon.core.util.PasswordUpdater $*
