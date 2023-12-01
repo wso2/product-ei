@@ -199,6 +199,14 @@ Repositories referred above
 
 Enterprise support for WSO2 EI is provided by WSO2. Learn more [here](https://wso2.com/subscription).
 
+## Survey On Open Source Community Communication
+
+WSO2 wants to learn more about our open source software (OSS) community and your communication preferences to serve you better.
+
+In addition, we may reach out to a small number of respondents to ask additional questions and offer a small gift.
+
+Link to survey: https://forms.gle/h5q4M3K7vyXba3bK6
+
 ## License
 
 ```
