@@ -41,7 +41,7 @@
                 <configuration>
                     <!--<argLine>-Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006</argLine>-->
                     <argLine>-Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m</argLine>
-                    <parallel>false</parallel>
+                    <parallel>classes</parallel>
                     <skipTests>${skipPlatformTests}</skipTests>
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testng-server-mgt.xml</suiteXmlFile>
@@ -78,6 +78,7 @@
                         <filters.file>${basedir}/src/test/resources/filters.txt</filters.file>
                     </systemProperties>
                     <workingDirectory>${basedir}/target</workingDirectory>
+                	<useUnlimitedThreads>true</useUnlimitedThreads>
                 </configuration>
             </plugin>
             <plugin>
