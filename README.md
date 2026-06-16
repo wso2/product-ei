@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **WSO2 Enterprise Integrator has evolved into [WSO2 Integrator](https://wso2.com/integrator/).**
+> For new integration projects, we recommend starting with the latest **WSO2 Integrator**.
+>
+> This repository remains available and supported for existing WSO2 EI users.
 
 ![WSO2 Enterprise Integrator](gh-docs/images/wso2-integration-logo.png?raw=true)
 
